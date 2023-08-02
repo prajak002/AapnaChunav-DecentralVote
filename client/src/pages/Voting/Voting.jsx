@@ -54,8 +54,7 @@ const Voting = () => {
         if (admin === acc) {
           setIsAdmin(true);
         }
-        // console.log(admin);
-        // console.log(acc);
+       
         const candidate = await electionInstance.methods
           .getAllCandidates()
           .call();
@@ -67,8 +66,7 @@ const Voting = () => {
         const isEnded = await electionInstance.methods.getEnd().call();
         setIsElEnded(isEnded);
 
-        // console.log(isStarted);
-        // console.log(isEnded);
+        
 
         const voter = await electionInstance.methods
           .getVoterDetails(acc)
