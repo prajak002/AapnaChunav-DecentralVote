@@ -136,6 +136,37 @@ contract Election {
     address[] public voters;
     mapping(address => Voter) public voterDetails;
 
+    struct donationDetails {
+        address donorAddress;
+        uint256 amount;
+        uint256 donetedTo;
+    }
+
+    donationDetails[] public donations;
+
+    function donate(uint256 _amount, uint256 _donetedTo) public payable {
+        collectedAmount += _amount;
+        donationDetails memory newDonation = donationDetails({
+            donorAddress: msg.sender,
+            donetedTo: _donetedTo,
+            amount: _amount
+        });
+        donations.push(newDonation);
+        payable(admin).transfer(_amount);
+    }
+
+    function getCollectedAmount() public view returns (uint256) {
+        return collectedAmount;
+    }
+
+    function getDonationDetails()
+        public
+        view
+        returns (donationDetails[] memory)
+    {
+        return donations;
+    }
+
     function registerAsVoter(
         string memory _name,
         string memory _email,
@@ -162,10 +193,10 @@ contract Election {
         voterCount += 1;
     }
 
-    function verifyVoter(bool _verifedStatus, address voterAddress)
-        public
-        onlyAdmin
-    {
+    function verifyVoter(
+        bool _verifedStatus,
+        address voterAddress
+    ) public onlyAdmin {
         voterDetails[voterAddress].isVerified = _verifedStatus;
     }
 
@@ -196,11 +227,9 @@ contract Election {
         start = false;
     }
 
-    function getVoterDetails(address voterAddress)
-        public
-        view
-        returns (Voter memory)
-    {
+    function getVoterDetails(
+        address voterAddress
+    ) public view returns (Voter memory) {
         return voterDetails[voterAddress];
     }
 
