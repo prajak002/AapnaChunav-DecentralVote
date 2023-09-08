@@ -26,6 +26,7 @@ function NavbarAdmin() {
     //reload the page
   };
 
+  
   const closeMenu = () => {
     setactive(false);
   };
