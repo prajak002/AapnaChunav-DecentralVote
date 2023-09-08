@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import { NavHashLink } from "react-router-hash-link";
 import { useNavigate } from "react-router-dom";
 import Web3 from "web3";
+import { useSelector } from "react-redux";
 
 function NavbarAdmin() {
+  const {verify,addCandidate,voting,funds,result,registers,home}= useSelector(state => state.checkSlice);
   const [active, setactive] = useState(false);
   const [login, setLogin] = useState(false);
 
@@ -30,7 +32,7 @@ function NavbarAdmin() {
     setactive(false);
   };
   return (
-    <Container className="header-fixed border-b-2 bg-[#e8e7e7]">
+    <Container className="header-fixed border-b-2 flex justify-between bg-[#23598f] dark:bg-[#fff] px-4">
       <Link to="/" className="text-[#ffc107] font-extrabold text-5xl hover:text-[#f2cf66]">
         <span className="text-6xl font-serif font-extrabold ">Admin </span>
       </Link>
@@ -44,67 +46,67 @@ function NavbarAdmin() {
       />
       <label htmlFor="switch">Toggle</label>
 
-      <nav className={active ? "active" : ""}>
-        <NavHashLink
-        className="bg-[#2d4b6e] text-[#fff] py-2 px-4 rounded-2xl hover:bg-[#234975]"
+      <div className=" flex justify-between items-center">
+        <Link
+        className={`py-2 px-4 rounded-lg   bg-[#fff] text-[#000000] hover:text-[#65aded] hover:underline font-bold mx-2 ${verify && "border-b-4 border-[#ffc107]"}`}
           to="/Verification"
           onClick={closeMenu}
-          style={{
-            fontWeight: "bold",
-          }}
+          
         >
-          Verification
-        </NavHashLink>
+          Verify
+        </Link>
 
-        <NavHashLink
-        className="bg-[#2d4b6e] text-[#fff] py-2 px-4 rounded-2xl hover:bg-[#234975]"
+        <Link
+        className={`py-2 px-4 rounded-lg   bg-[#fff] text-[#000000] hover:text-[#65aded] hover:underline font-bold mx-2 ${addCandidate && "border-b-4 border-[#ffc107]"}`}
           smooth
           to="/AddCandidate"
-          style={{
-            fontWeight: "bold",
-          }}
+          
           onClick={closeMenu}
         >
-          Add Candidate
-        </NavHashLink>
-        <NavHashLink
-        className="bg-[#2d4b6e] text-[#fff] py-2 px-4 rounded-2xl hover:bg-[#234975]"
-          smooth
-          to="/Registration"
-          style={{
-            fontWeight: "bold",
-          }}
-          onClick={closeMenu}
-        >
-          Registration
-        </NavHashLink>
-        <NavHashLink
-        className="bg-[#2d4b6e] text-[#fff] py-2 px-4 rounded-2xl hover:bg-[#234975]"
+          Add Candidates
+        </Link>
+        
+        <Link
+        className={`py-2 px-4 rounded-lg   bg-[#fff] text-[#000000] hover:text-[#65aded] hover:underline font-bold mx-2 ${voting && "border-b-4 border-[#ffc107]"}`}
           smooth
           to="/Voting"
-          style={{
-            fontWeight: "bold",
-          }}
+          
           onClick={closeMenu}
         >
           Voting
-        </NavHashLink>
-        <NavHashLink
-        className="bg-[#2d4b6e] text-[#fff] py-2 px-4 rounded-2xl hover:bg-[#234975]"
+        </Link>
+        <Link
+        className={`py-2 px-4 rounded-lg   bg-[#fff] text-[#000000] hover:text-[#65aded] hover:underline font-bold mx-2 ${funds && "border-b-4 border-[#ffc107]"}`}
+          smooth
+          to="/Funds"
+          
+          onClick={closeMenu}
+        >
+          Funds
+        </Link>
+        <Link
+        className={`py-2 px-4 rounded-lg   bg-[#fff] text-[#000000] hover:text-[#65aded] hover:underline font-bold mx-2 ${result && "border-b-4 border-[#ffc107]"}`}
           smooth
           to="/Result"
-          style={{
-            fontWeight: "bold",
-          }}
+          
           onClick={closeMenu}
         >
           Results
-        </NavHashLink>
+        </Link>
+        <Link
+        className={`py-2 px-4 rounded-lg   bg-[#fff] text-[#000000] hover:text-[#65aded] hover:underline font-bold mx-2 ${registers && "border-b-4 border-[#ffc107]"}`}
+          smooth
+          to="/Registration"
+          
+          onClick={closeMenu}
+        >
+          Register
+        </Link>
 
         {/* <Link className="button" onClick={logoutUser}>
           Disconnect
         </Link> */}
-      </nav>
+      </div>
 
       <div
         aria-expanded={active ? "true" : "false"}
