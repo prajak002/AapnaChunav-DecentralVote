@@ -8,6 +8,7 @@ const StartEnd = (props) => {
     padding: "21px",
     margin: "7px",
     minWidth: "max-content",
+    
     textAlign: "center",
     width: "333px",
     alignSelf: "center",
