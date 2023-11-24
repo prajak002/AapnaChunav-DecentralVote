@@ -1,36 +1,35 @@
 const express = require("express");
+const dotenv = require("dotenv");
+dotenv.config();
 const faceapi = require("face-api.js");
 const mongoose = require("mongoose");
 const { Canvas, Image } = require("canvas");
 const canvas = require("canvas");
 const fileUpload = require("express-fileupload");
-const fs=require("fs")
-
 const cors = require("cors");
-const path = require("path");
 faceapi.env.monkeyPatch({ Canvas, Image });
-
+const fs = require("fs");
+const path = require("path");
 const app = express();
-const accountSid = "AC740faf794ec6d4f2391b18a2334050be";
-const authToken = "9e3ca2ab698f6e00703224387d20a126";
+
 const client = require("twilio")(accountSid, authToken);
-app.use(cors());
+
 app.use(
   fileUpload({
     useTempFiles: true,
   })
 );
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 async function LoadModels() {
-  await faceapi.nets.ssdMobilenetv1.loadFromDisk(__dirname + "/models");
+  await faceapi.nets.ssdMobilenetv1.loadFromDisk(__dirname + "/models/models");
   await faceapi.nets.faceLandmark68Net.loadFromDisk(
-    __dirname + "/models"
+    __dirname + "/models/models"
   );
   await faceapi.nets.faceRecognitionNet.loadFromDisk(
-    __dirname + "/models"
+    __dirname + "/models/models"
   );
 }
 LoadModels();
@@ -132,7 +131,7 @@ app.post("/send", (req, res) => {
   client.messages
     .create({
       body: message,
-      from: "+15076235424",
+      from: "+12762778269",
       to: number,
     })
     .then((message) => {
@@ -193,9 +192,10 @@ app.post("/check-face", async (req, res) => {
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");
+  mongoose.set("strictQuery", true);
   mongoose
     .connect(
-      "mongodb+srv://admin:admin@cluster-mern01.jfns1xj.mongodb.net/pwproject",
+      "mongodb+srv://admin:Dws5eFgTaYXq47HD@mern.ztyvxss.mongodb.net/?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
